@@ -3,13 +3,27 @@ package com.like_magic.instagramprofilecard
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.Modifier
 import com.like_magic.instagramprofilecard.ui.InstagramProfileCard
+import com.like_magic.instagramprofilecard.ui.theme.InstagramProfileCardTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            InstagramProfileCard()
+            InstagramProfileCardTheme() {
+                Box(
+                    modifier = Modifier
+                        .background(MaterialTheme.colorScheme.background)
+                        .fillMaxSize()
+                ) {
+                    InstagramProfileCard()
+                }
+            }
         }
     }
 }
