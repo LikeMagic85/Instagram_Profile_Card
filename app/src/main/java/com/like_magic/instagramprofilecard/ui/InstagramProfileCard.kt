@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -40,8 +41,7 @@ fun InstagramProfileCard() {
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.onBackground),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.background
-        ),
-        modifier = Modifier.padding(4.dp)
+        )
     ) {
         Row(
             modifier = Modifier
@@ -67,6 +67,20 @@ fun InstagramProfileCard() {
             UserStatistics(topText = "436M", bottomText = "Followers")
             UserStatistics(topText = "78", bottomText = "Following")
         }
+        FillCardRow(text = "Instagram", fontSize = 32, fontFamily = FontFamily.Cursive)
+        FillCardRow(text = "#YoursToMake", fontSize = 16, fontFamily = FontFamily.Default)
+        FillCardRow(
+            text = "www.facebook.com/emotional_health",
+            fontSize = 16,
+            fontFamily = FontFamily.Default
+        )
+        Button(
+            onClick = {  },
+            shape = RoundedCornerShape(4.dp),
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text(text = "Follow")
+        }
     }
 
 }
@@ -87,5 +101,21 @@ private fun UserStatistics(topText: String, bottomText: String) {
         Box() {
             Text(text = bottomText)
         }
+    }
+}
+
+@Composable
+private fun FillCardRow(text: String, fontSize: Int, fontFamily: FontFamily) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(start = 16.dp, bottom = 4.dp)
+    ) {
+        Text(
+            text = text,
+            fontSize = fontSize.sp,
+            fontFamily = fontFamily
+        )
     }
 }
