@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -25,14 +26,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.like_magic.instagramprofilecard.InstagramModel
 import com.like_magic.instagramprofilecard.R
 
-@Preview
 @Composable
-fun InstagramProfileCard() {
+fun InstagramProfileCard(instagramModel: InstagramModel, onClickListener:(InstagramModel)-> Unit) {
+
     Card(
         shape = RoundedCornerShape(
             topStart = 4.dp,
@@ -41,7 +42,8 @@ fun InstagramProfileCard() {
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.onBackground),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.background
-        )
+        ),
+        modifier = Modifier.padding(bottom = 8.dp)
     ) {
         Row(
             modifier = Modifier
@@ -67,20 +69,25 @@ fun InstagramProfileCard() {
             UserStatistics(topText = "436M", bottomText = "Followers")
             UserStatistics(topText = "78", bottomText = "Following")
         }
-        FillCardRow(text = "Instagram", fontSize = 32, fontFamily = FontFamily.Cursive)
-        FillCardRow(text = "#YoursToMake", fontSize = 16, fontFamily = FontFamily.Default)
+        FillCardRow(
+            text = "Instagram ${instagramModel.id}",
+            fontSize = 32,
+            fontFamily = FontFamily.Cursive
+        )
+        FillCardRow(
+            text = instagramModel.title,
+            fontSize = 16,
+            fontFamily = FontFamily.Default
+        )
         FillCardRow(
             text = "www.facebook.com/emotional_health",
             fontSize = 16,
             fontFamily = FontFamily.Default
         )
-        Button(
-            onClick = {  },
-            shape = RoundedCornerShape(4.dp),
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Text(text = "Follow")
+        FollowButton(isFollowed = instagramModel.isFollowed) {
+            onClickListener(instagramModel)
         }
+
     }
 
 }
@@ -118,4 +125,31 @@ private fun FillCardRow(text: String, fontSize: Int, fontFamily: FontFamily) {
             fontFamily = fontFamily
         )
     }
+}
+
+@Composable
+private fun FollowButton(
+    isFollowed: Boolean,
+    clickListener:()->Unit
+){
+    val color = if (isFollowed) {
+        MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
+
+    } else {
+        MaterialTheme.colorScheme.primary
+    }
+    Button(
+        onClick = { clickListener() },
+        shape = RoundedCornerShape(4.dp),
+        modifier = Modifier.padding(16.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = color
+        )
+    ) {
+        Text(text = setText(isFollowed))
+    }
+}
+
+private fun setText(state: Boolean): String {
+    return if (state) "Unfollow" else "Follow"
 }
